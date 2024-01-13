@@ -2,6 +2,7 @@ package lk.ijse.dep11.edupanel.api;
 
 import lk.ijse.dep11.edupanel.to.request.LectureReqTO;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class LecturerHttpController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = "multipart/form-data", produces = "application/json")
-    public void createNewLecturer(@ModelAttribute LectureReqTO lectureReqTO){
+    public void createNewLecturer(@ModelAttribute @Validated(LectureReqTO.Create.class) LectureReqTO lectureReqTO){
         System.out.println(lectureReqTO);
     }
     @ResponseStatus(HttpStatus.NO_CONTENT)
