@@ -22,7 +22,7 @@ public class Lecturer implements Serializable {
     @Column(nullable = false, length = 600)
     String designation;
     @Column(nullable = false, length = 600)
-    String qualification;
+    String qualifications;
     @Column(nullable = false, columnDefinition = "ENUM('FULL_TIME', 'VISITING')")
     @Enumerated(EnumType.STRING)
     LecturerType type;
@@ -37,19 +37,19 @@ public class Lecturer implements Serializable {
     @OneToOne(mappedBy = "lecturer")
     LinkedIn linkedIn;
 
-    public Lecturer(String name, String designation, String qualification, LecturerType type, int displayOrder) {
+    public Lecturer(String name, String designation, String qualifications, LecturerType type, int displayOrder) {
         this.name = name;
         this.designation = designation;
-        this.qualification = qualification;
+        this.qualifications = qualifications;
         this.type = type;
         this.displayOrder = displayOrder;
     }
 
-    public Lecturer(int id, String name, String designation, String qualification, LecturerType type, int displayOrder) {
+    public Lecturer(int id, String name, String designation, String qualifications, LecturerType type, int displayOrder) {
         this.id = id;
         this.name = name;
         this.designation = designation;
-        this.qualification = qualification;
+        this.qualifications = qualifications;
         this.type = type;
         this.displayOrder = displayOrder;
     }
