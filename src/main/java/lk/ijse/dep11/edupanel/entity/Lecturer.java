@@ -30,11 +30,11 @@ public class Lecturer implements Serializable {
     int displayOrder;
 
     @ToString.Exclude
-    @OneToOne(mappedBy = "lecturer")
+    @OneToOne(mappedBy = "lecturer",cascade = {CascadeType.REMOVE, CascadeType.MERGE})
     Picture picture;
 
     @ToString.Exclude
-    @OneToOne(mappedBy = "lecturer")
+    @OneToOne(mappedBy = "lecturer", cascade = {CascadeType.REMOVE, CascadeType.MERGE})
     LinkedIn linkedIn;
 
     public Lecturer(String name, String designation, String qualifications, LecturerType type, int displayOrder) {
@@ -56,10 +56,12 @@ public class Lecturer implements Serializable {
 
     public void setPicture(Picture picture) {
         if(picture != null) picture.setLecturer(this);
+        this.picture = picture;
     }
 
     public void setLinkedIn(LinkedIn linkedIn) {
         if(linkedIn != null) linkedIn.setLecturer(this);
+        this.linkedIn= linkedIn;
     }
 
 }
