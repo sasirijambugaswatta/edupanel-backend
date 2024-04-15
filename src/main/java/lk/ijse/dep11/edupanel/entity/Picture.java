@@ -15,7 +15,7 @@ import java.io.Serializable;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "picture")
-public class Picture implements Serializable {
+public class Picture implements SuperEntity {
     @Id
     @OneToOne
     @JoinColumn(name = "lecturer_id", referencedColumnName = "id")

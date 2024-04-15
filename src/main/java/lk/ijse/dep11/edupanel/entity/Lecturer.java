@@ -13,7 +13,7 @@ import java.io.Serializable;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "lecturer")
-public class Lecturer implements Serializable {
+public class Lecturer implements SuperEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;

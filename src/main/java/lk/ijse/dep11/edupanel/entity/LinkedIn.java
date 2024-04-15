@@ -15,7 +15,7 @@ import java.io.Serializable;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "linkedin")
-public class LinkedIn implements Serializable {
+public class LinkedIn implements SuperEntity{
     @Id
     @OneToOne
     @JoinColumn(name = "lecturer_id", referencedColumnName = "id")
