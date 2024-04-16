@@ -12,39 +12,47 @@ import java.util.Optional;
 
 public class LinkedInRepositoryImpl implements LinkedInRepository {
 
+    private EntityManager em;
+
+    @Override
+    public void setEntityManager(EntityManager em) {
+        this.em = em;
+    }
 
     @Override
     public LinkedIn save(LinkedIn entity) {
-        return null;
+        em.persist(entity);
+        return entity;
     }
 
     @Override
     public void update(LinkedIn entity) {
-
+        em.merge(entity);
     }
 
     @Override
     public void deleteById(Lecturer pk) {
+        em.remove(em.find(LinkedIn.class, pk));
+    }
 
+    @Override
+    public boolean existsById(Lecturer pk) {
+        return findById(pk).isPresent();
     }
 
     @Override
     public Optional<LinkedIn> findById(Lecturer pk) {
-        return Optional.empty();
+        return Optional.ofNullable(em.find(LinkedIn.class, pk));
     }
 
     @Override
     public List<LinkedIn> findAll() {
-        return List.of();
+        return em.createQuery("SELECT li FROM LinkedIn li", LinkedIn.class).getResultList();
     }
 
     @Override
     public long count() {
-        return 0;
+        return em.createQuery("SELECT COUNT(li) FROM LinkedIn li", Long.class).getSingleResult();
     }
 
-    @Override
-    public void setEntityManager(EntityManager em) {
-
-    }
 }
