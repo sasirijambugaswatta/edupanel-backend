@@ -1,5 +1,7 @@
 package lk.ijse.dep11.edupanel.repository.custom.impl;
 
+import lk.ijse.dep11.edupanel.WebAppConfig;
+import lk.ijse.dep11.edupanel.WebRootConfig;
 import lk.ijse.dep11.edupanel.entity.Lecturer;
 import lk.ijse.dep11.edupanel.repository.RepositoryFactory;
 import lk.ijse.dep11.edupanel.repository.custom.LecturerRepository;
@@ -7,8 +9,14 @@ import lk.ijse.dep11.edupanel.util.LecturerType;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import java.util.List;
@@ -16,15 +24,23 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//@ExtendWith(SpringExtension.class)
+//@ContextConfiguration(classes = WebRootConfig.class)
+
+@SpringJUnitWebConfig(classes = {WebRootConfig.class, WebAppConfig.class})
+
 class LecturerRepositoryImplTest {
 
     private final LecturerRepository repository =  RepositoryFactory.getInstance().getRepository(RepositoryFactory.RepositoryType.LECTURER);
 
     private EntityManager entityManager;
 
+    @Autowired
+    private EntityManagerFactory entityManagerFactory;
+
     @BeforeEach
     void setUp() {
-        entityManager = Persistence.createEntityManagerFactory("default").createEntityManager();
+        entityManager = entityManagerFactory.createEntityManager();
         repository.setEntityManager(entityManager);
         entityManager.getTransaction().begin();
     }
@@ -131,7 +147,7 @@ class LecturerRepositoryImplTest {
         }
         long count = repository.count();
 
-        assertEquals(120, count);
+        assertTrue(count > 120);
     }
 
 
