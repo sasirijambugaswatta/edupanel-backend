@@ -24,6 +24,11 @@ public class CrudRepositoryImpl<T extends SuperEntity, ID extends Serializable>
     }
 
     @Override
+    public EntityManager getEntityManager() {
+        return em;
+    }
+
+    @Override
     public T save(T entity) {
         em.persist(entity);
         return entity;
