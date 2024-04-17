@@ -1,4 +1,4 @@
-package lk.ijse.dep11.edupanel.repository.custom.impl;
+package lk.ijse.dep11.edupanel.service.custom;
 
 import lk.ijse.dep11.edupanel.repository.RepositoryFactory;
 import lk.ijse.dep11.edupanel.repository.custom.LectureService;
@@ -10,7 +10,6 @@ import lk.ijse.dep11.edupanel.to.LectureTo;
 import lk.ijse.dep11.edupanel.to.request.LectureReqTO;
 import lk.ijse.dep11.edupanel.util.LecturerType;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 public class LectureServiceImpl implements LectureService {
