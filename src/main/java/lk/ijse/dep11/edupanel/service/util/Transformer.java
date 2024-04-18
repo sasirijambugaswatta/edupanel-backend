@@ -17,7 +17,7 @@ public class Transformer {
         modelMapper.typeMap(String.class, LinkedIn.class).setConverter(ctx -> new LinkedIn(null, ctx.getSource()));
     }
 
-    Lecturer fromLecturerReqTO(LectureReqTO lecturerReqTO){
+    public Lecturer fromLecturerReqTO(LectureReqTO lecturerReqTO){
         Lecturer lecturer = modelMapper.map(lecturerReqTO, Lecturer.class);
         if (lecturerReqTO.getLinkedin() == null){
             lecturer.setLinkedIn(null);
@@ -30,18 +30,18 @@ public class Transformer {
         return lecturer;
     }
 
-    Lecturer fromLecturerTO(LectureTo lecturerTO){
+    public Lecturer fromLecturerTO(LectureTo lecturerTO){
         Lecturer lecturer = modelMapper.map(lecturerTO, Lecturer.class);
         lecturer.getLinkedIn().setLecturer(lecturer);
         return lecturer;
 
     }
 
-    LectureTo toLecturerTO(Lecturer lecturer){
+    public LectureTo toLecturerTO(Lecturer lecturer){
         return modelMapper.map(lecturer, LectureTo.class);
     }
 
-    List<LectureTo> toLectureTOList(List<Lecturer> lecturerList){
+    public List<LectureTo> toLectureTOList(List<Lecturer> lecturerList){
         return lecturerList.stream().map(this::toLecturerTO).collect(Collectors.toList());
     }
 }

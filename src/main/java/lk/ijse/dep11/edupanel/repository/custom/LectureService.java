@@ -5,10 +5,11 @@ import lk.ijse.dep11.edupanel.to.LectureTo;
 import lk.ijse.dep11.edupanel.to.request.LectureReqTO;
 import lk.ijse.dep11.edupanel.util.LecturerType;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface LectureService extends SuperService {
-    LectureTo saveLecturer(LectureReqTO lecturerReqTO);
+    LectureTo saveLecturer(LectureReqTO lecturerReqTO) throws IOException;
 
     void updateLecturerDetailsWithImage(LectureReqTO lecturerReqTO);
 
