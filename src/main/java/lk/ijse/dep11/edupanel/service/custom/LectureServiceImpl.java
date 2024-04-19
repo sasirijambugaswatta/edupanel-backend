@@ -39,10 +39,10 @@ public class LectureServiceImpl implements LectureService {
         AppStore.getEntityManager().getTransaction().begin();
         try {
             Lecturer lecturer = transformer.fromLecturerReqTO(lecturerReqTO);
-            lecturer = lecturerRepository.save(lecturer);
+            lecturerRepository.save(lecturer);
 
             if(lecturerReqTO.getLinkedin() != null){
-                linkedInRepository.save(new LinkedIn(lecturer, lecturerReqTO.getLinkedin()));
+                linkedInRepository.save(lecturer.getLinkedIn());
             }
 
             String signUrl = null;
