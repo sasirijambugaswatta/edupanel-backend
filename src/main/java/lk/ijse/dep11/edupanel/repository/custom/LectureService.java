@@ -11,9 +11,9 @@ import java.util.List;
 public interface LectureService extends SuperService {
     LectureTo saveLecturer(LectureReqTO lecturerReqTO) throws IOException;
 
-    void updateLecturerDetailsWithImage(LectureReqTO lecturerReqTO);
+    void updateLecturerDetails(LectureReqTO lecturerReqTO);
 
-    void updateLecturerDetailsWithoutImage(LectureTo lecturerTO);
+    void updateLecturerDetails(LectureTo lectureTo);
 
     void deleteLecturer(Integer lecturerId);
 

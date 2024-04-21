@@ -7,7 +7,7 @@ public class AppException extends RuntimeException {
         this.errCode = errCode;
     }
 
-    public AppException(String message, int errCode) {
+    public AppException(int errCode,String message) {
         super(message);
         this.errCode = errCode;
     }

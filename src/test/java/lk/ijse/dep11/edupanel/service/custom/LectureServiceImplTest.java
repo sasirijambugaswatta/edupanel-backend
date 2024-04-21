@@ -2,6 +2,7 @@ package lk.ijse.dep11.edupanel.service.custom;
 
 import com.google.cloud.storage.Bucket;
 import lk.ijse.dep11.edupanel.WebAppConfig;
+import lk.ijse.dep11.edupanel.exception.AppException;
 import lk.ijse.dep11.edupanel.repository.custom.LectureService;
 import lk.ijse.dep11.edupanel.service.ServiceFactory;
 import lk.ijse.dep11.edupanel.store.AppStore;
@@ -67,23 +68,61 @@ class LectureServiceImplTest {
         }*/
     }
 
+
+
     @Test
-    void updateLecturerDetailsWithImage() {
+    void deleteLecturer() throws IOException {
+        LectureReqTO lectureReqTO = new LectureReqTO("Amith", "Assosiate Lecturer", "Bsc",
+                LecturerType.VISITING, 6, null, "https://linkedin.com/");
+        LectureTo lectureTo = lectureService.saveLecturer(lectureReqTO);
+        lectureService.deleteLecturer(lectureTo.getId());
+
+        assertThrows(AppException.class, () -> lectureService.getLecturerDetails(lectureTo.getId()));
+        assertThrows(AppException.class, () -> lectureService.deleteLecturer(-100));
+
     }
 
     @Test
-    void updateLecturerDetailsWithoutImage() {
+    void getLecturerDetails() throws IOException {
+        LectureReqTO lectureReqTO = new LectureReqTO("Amith", "Assosiate Lecturer", "Bsc",
+                LecturerType.VISITING, 6, null, "https://linkedin.com/");
+        LectureTo lectureTo = lectureService.saveLecturer(lectureReqTO);
+        LectureTo lecture = lectureService.getLecturerDetails(lectureTo.getId());
+
+        assertEquals(lectureReqTO.getName(), lecture.getName());
+
+
+        assertThrows(AppException.class,() -> lectureService.getLecturerDetails(-100));
+
+
     }
 
     @Test
-    void deleteLecturer() {
+    void getLecturers() throws IOException {
+        for (int i = 0; i < 10; i++) {
+            LectureReqTO lectureReqTO = new LectureReqTO("Amith", "Assosiate Lecturer", "Bsc",
+                    i< 5 ? LecturerType.VISITING: LecturerType.FULL_TIME, 6, null, "https://linkedin.com/");
+            lectureService.saveLecturer(lectureReqTO);
+        }
+        assertTrue(lectureService.getLecturers(null).size() >= 10);
+        assertTrue(lectureService.getLecturers(LecturerType.FULL_TIME).size() >= 5);
+        assertTrue(lectureService.getLecturers(LecturerType.VISITING).size() >= 5);
+
     }
 
     @Test
-    void getLecturerDetails() {
-    }
+    void updateLecturerDetails() throws IOException {
+        LectureReqTO lectureReqTO = new LectureReqTO("Amith", "Assosiate Lecturer", "Bsc",
+                LecturerType.VISITING, 6, null, "https://linkedin.com/");
+        LectureTo lectureTo = lectureService.saveLecturer(lectureReqTO);
+        lectureTo.setName("Nuwan");
+        lectureTo.setLinkedIn(null);
 
-    @Test
-    void getLecturers() {
+        lectureService.updateLecturerDetails(lectureTo);
+
+        LectureTo lecture = lectureService.getLecturerDetails(lectureTo.getId());
+        assertEquals(lectureTo, lecture);
+
+
     }
 }
