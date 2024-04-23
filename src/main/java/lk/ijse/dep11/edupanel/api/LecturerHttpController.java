@@ -36,24 +36,18 @@ public class LecturerHttpController {
     @Autowired
     private Bucket bucket;
 
+    private LectureService lectureService;
 
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = "multipart/form-data", produces = "application/json")
     public LectureTo createNewLecturer(@ModelAttribute @Validated(LectureReqTO.Create.class) LectureReqTO lecturerReqTo) throws IOException {
-        AppStore.setBucket(bucket);
-        AppStore.setEntityManager(em);
-        LectureService lectureService = ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.LECTURER);
         return lectureService.saveLecturer(lecturerReqTo);
     }
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping(value = "/{lecturer-id}",consumes = "multipart/form-data")
     public void updateLecturerDetailsViaMultipart(@PathVariable("lecturer-id") Integer lecturerId,
                                                   @ModelAttribute @Validated(LectureReqTO.Update.class) LectureReqTO lecturerReqTO) {
-        AppStore.setBucket(bucket);
-        AppStore.setEntityManager(em);
-        LectureService lectureService = ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.LECTURER);
-
         lecturerReqTO.setId(lecturerId);
         lectureService.updateLecturerDetails(lecturerReqTO);
 
@@ -63,9 +57,6 @@ public class LecturerHttpController {
     @PatchMapping(value = "/{lecturer-id}",consumes = "application/json")
     public void updateLecturerDetailsViaJson(@PathVariable("lecturer-id") Integer lecturerId,
                                              @RequestBody @Validated LectureTo lecturerTO) {
-        AppStore.setBucket(bucket);
-        AppStore.setEntityManager(em);
-        LectureService lectureService = ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.LECTURER);
 
         lecturerTO.setId(lecturerId);
         lectureService.updateLecturerDetails(lecturerTO);
@@ -73,41 +64,26 @@ public class LecturerHttpController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{lecturer-id}")
     public void deleteLecturer(@PathVariable("lecturer-id") Integer lecturerId){
-        AppStore.setBucket(bucket);
-        AppStore.setEntityManager(em);
-        LectureService lectureService = ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.LECTURER);
 
         lectureService.deleteLecturer(lecturerId);
     }
     @GetMapping(produces = "application/json")
     public List<LectureTo> getAllLecturer(){
-        AppStore.setBucket(bucket);
-        AppStore.setEntityManager(em);
-        LectureService lectureService = ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.LECTURER);
 
         return lectureService.getLecturers(null);
     }
     @GetMapping(value = "/{lecturer-id}", produces = "application/json")
     public LectureTo getLecturerDetails(@PathVariable("lecturer-id") Integer lecturerId){
-        AppStore.setBucket(bucket);
-        AppStore.setEntityManager(em);
-        LectureService lectureService = ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.LECTURER);
 
         return lectureService.getLecturerDetails(lecturerId);
     }
     @GetMapping(params = "type=full-time", produces = "application/json")
     public List<LectureTo> getFullTimeLecturers(){
-        AppStore.setBucket(bucket);
-        AppStore.setEntityManager(em);
-        LectureService lectureService = ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.LECTURER);
 
         return lectureService.getLecturers(LecturerType.FULL_TIME);
     }
     @GetMapping(params = "type=visiting", produces = "application/json")
     public List<LectureTo> getVisitingLecturers(){
-        AppStore.setBucket(bucket);
-        AppStore.setEntityManager(em);
-        LectureService lectureService = ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.LECTURER);
 
         return lectureService.getLecturers(LecturerType.VISITING);
     }
