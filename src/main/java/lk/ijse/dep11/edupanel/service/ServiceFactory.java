@@ -12,7 +12,7 @@ public class ServiceFactory {
     private ServiceFactory() {}
 
     public static ServiceFactory getInstance() {
-        return instance == null ? instance = new ServiceFactory() : instance;
+        return (instance == null) ? (instance = new ServiceFactory()) : instance;
     }
 
     public <T extends SuperService> T getService(ServiceType serviceType) {
