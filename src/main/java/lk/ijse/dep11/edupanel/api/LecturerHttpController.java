@@ -1,14 +1,6 @@
 package lk.ijse.dep11.edupanel.api;
 
-import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.Bucket;
-import com.google.cloud.storage.Storage;
-import lk.ijse.dep11.edupanel.entity.Lecturer;
-import lk.ijse.dep11.edupanel.entity.LinkedIn;
-import lk.ijse.dep11.edupanel.entity.Picture;
 import lk.ijse.dep11.edupanel.repository.custom.LectureService;
-import lk.ijse.dep11.edupanel.service.ServiceFactory;
-import lk.ijse.dep11.edupanel.store.AppStore;
 import lk.ijse.dep11.edupanel.to.LectureTo;
 import lk.ijse.dep11.edupanel.to.request.LectureReqTO;
 import lk.ijse.dep11.edupanel.util.LecturerType;
@@ -16,26 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/lecturers")
 @CrossOrigin
 public class LecturerHttpController {
-
     @Autowired
-    EntityManager em;
-
-    @Autowired
-    private Bucket bucket;
-
     private LectureService lectureService;
 
 

@@ -1,11 +1,8 @@
 package lk.ijse.dep11.edupanel.service.custom;
 
-import com.google.cloud.storage.Bucket;
 import lk.ijse.dep11.edupanel.WebAppConfig;
 import lk.ijse.dep11.edupanel.exception.AppException;
 import lk.ijse.dep11.edupanel.repository.custom.LectureService;
-import lk.ijse.dep11.edupanel.service.ServiceFactory;
-import lk.ijse.dep11.edupanel.store.AppStore;
 import lk.ijse.dep11.edupanel.to.LectureTo;
 import lk.ijse.dep11.edupanel.to.request.LectureReqTO;
 import lk.ijse.dep11.edupanel.util.LecturerType;
@@ -15,34 +12,27 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import javax.transaction.Transactional;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 @SpringJUnitWebConfig(classes = {WebAppConfig.class, WebAppConfig.class})
+@Transactional
 class LectureServiceImplTest {
 
+    @Autowired
     private LectureService lectureService;
-    @Autowired
-    private EntityManagerFactory entityManagerFactory;
-    private EntityManager entityManager;
-    @Autowired
-    private Bucket bucket;
 
     @BeforeEach
     void setUp() {
-        entityManager = entityManagerFactory.createEntityManager();
-        AppStore.setEntityManager(entityManager);
-        AppStore.setBucket(bucket);
-        lectureService = ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.LECTURER);
+
     }
 
     @AfterEach
     void tearDown() {
-        entityManager.close();
+
     }
 
     @Test

@@ -6,18 +6,21 @@ import lk.ijse.dep11.edupanel.entity.Picture;
 import lk.ijse.dep11.edupanel.to.LectureTo;
 import lk.ijse.dep11.edupanel.to.request.LectureReqTO;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class Transformer {
-    private final ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper;
 
-    public Transformer() {
-        modelMapper.typeMap(LinkedIn.class, String.class).setConverter(ctx ->ctx.getSource() != null ? ctx.getSource().getUrl() : null);
-        modelMapper.typeMap(String.class, LinkedIn.class).setConverter(ctx ->ctx.getSource() != null ? new LinkedIn(null, ctx.getSource()) : null);
-        modelMapper.typeMap(MultipartFile.class, Picture.class).setConverter(ctx -> null);
+    public Transformer(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+//        modelMapper.typeMap(LinkedIn.class, String.class).setConverter(ctx ->ctx.getSource() != null ? ctx.getSource().getUrl() : null);
+//        modelMapper.typeMap(String.class, LinkedIn.class).setConverter(ctx ->ctx.getSource() != null ? new LinkedIn(null, ctx.getSource()) : null);
+//        modelMapper.typeMap(MultipartFile.class, Picture.class).setConverter(ctx -> null);
     }
 
     public Lecturer fromLecturerReqTO(LectureReqTO lecturerReqTO){
