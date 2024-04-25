@@ -17,9 +17,18 @@ import java.io.Serializable;
 @Table(name = "linkedin")
 public class LinkedIn implements SuperEntity{
     @Id
+    @Column(name = "lecturer_id")
+    private Integer lecturerId;
+
+    @MapsId
     @OneToOne
     @JoinColumn(name = "lecturer_id", referencedColumnName = "id")
     Lecturer lecturer;
     @Column(nullable = false, length = 2000)
     String url;
+
+    public LinkedIn(Lecturer lecturer, String url) {
+        this.lecturer = lecturer;
+        this.url = url;
+    }
 }

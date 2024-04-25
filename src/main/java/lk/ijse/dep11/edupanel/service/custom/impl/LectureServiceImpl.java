@@ -1,4 +1,4 @@
-package lk.ijse.dep11.edupanel.service.custom;
+package lk.ijse.dep11.edupanel.service.custom.impl;
 
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Bucket;
@@ -7,10 +7,10 @@ import lk.ijse.dep11.edupanel.entity.Lecturer;
 import lk.ijse.dep11.edupanel.entity.LinkedIn;
 import lk.ijse.dep11.edupanel.entity.Picture;
 import lk.ijse.dep11.edupanel.exception.AppException;
-import lk.ijse.dep11.edupanel.repository.custom.LectureService;
-import lk.ijse.dep11.edupanel.repository.custom.LecturerRepository;
-import lk.ijse.dep11.edupanel.repository.custom.LinkedInRepository;
-import lk.ijse.dep11.edupanel.repository.custom.PictureRepository;
+import lk.ijse.dep11.edupanel.repository.LectureRepository;
+import lk.ijse.dep11.edupanel.repository.LinkedInRepository;
+import lk.ijse.dep11.edupanel.repository.PictureRepository;
+import lk.ijse.dep11.edupanel.service.custom.LecturerService;
 import lk.ijse.dep11.edupanel.service.util.Transformer;
 import lk.ijse.dep11.edupanel.to.LectureTo;
 import lk.ijse.dep11.edupanel.to.request.LectureReqTO;
@@ -26,15 +26,15 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class LectureServiceImpl implements LectureService {
+public class LectureServiceImpl implements LecturerService {
 
-    private final LecturerRepository lectureRepository;
+    private final LectureRepository lectureRepository;
     private final PictureRepository pictureRepository;
     private final LinkedInRepository linkedInRepository;
     private final Transformer transformer;
     private final Bucket bucket;
 
-    public LectureServiceImpl(LecturerRepository lectureRepository, PictureRepository pictureRepository, LinkedInRepository linkedInRepository, Transformer transformer, Bucket bucket) {
+    public LectureServiceImpl(LectureRepository lectureRepository, PictureRepository pictureRepository, LinkedInRepository linkedInRepository, Transformer transformer, Bucket bucket) {
         this.lectureRepository = lectureRepository;
         this.pictureRepository = pictureRepository;
         this.linkedInRepository = linkedInRepository;
@@ -43,7 +43,7 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public LectureTo saveLecturer(LectureReqTO lecturerReqTO) throws IOException {
+    public LectureTo saveLecturer(LectureReqTO lecturerReqTO) {
 
 
         Lecturer lecturer = transformer.fromLecturerReqTO(lecturerReqTO);
@@ -96,13 +96,13 @@ public class LectureServiceImpl implements LectureService {
                 pictureRepository.deleteById(currentLecturer.getId());
                 bucket.get(currentLecturer.getPicture().getPicturePath()).delete();
             } else if (newLecturer.getPicture() != null) {
-                pictureRepository.update(newLecturer.getPicture());
+                pictureRepository.save(newLecturer.getPicture());
                 bucket.create(newLecturer.getPicture().getPicturePath(), lecturerReqTO.getPicture().getInputStream(), lecturerReqTO.getPicture().getContentType());
             }
         }catch (IOException e){
             throw new AppException("Failed to update picture", e, 500);
         }
-        lectureRepository.update(newLecturer);
+        lectureRepository.save(newLecturer);
     }
 
     @Override
@@ -114,7 +114,7 @@ public class LectureServiceImpl implements LectureService {
         Lecturer newLecturer = transformer.fromLecturerTO(lecturerTO);
         newLecturer.setPicture(currentLecturer.getPicture());
         updateLinkedIn(currentLecturer, newLecturer);
-        lectureRepository.update(newLecturer);
+        lectureRepository.save(newLecturer);
     }
 
     @Override
@@ -160,7 +160,7 @@ public class LectureServiceImpl implements LectureService {
         } else if (newLecturer.getLinkedIn() == null && currentLecturer.getLinkedIn() != null) {
             linkedInRepository.deleteById(currentLecturer.getId());
         } else if (newLecturer.getLinkedIn() != null) {
-            linkedInRepository.update(newLecturer.getLinkedIn());
+            linkedInRepository.save(newLecturer.getLinkedIn());
         }
     }
 }

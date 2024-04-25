@@ -1,6 +1,6 @@
 package lk.ijse.dep11.edupanel.api;
 
-import lk.ijse.dep11.edupanel.repository.custom.LectureService;
+import lk.ijse.dep11.edupanel.service.custom.LecturerService;
 import lk.ijse.dep11.edupanel.to.LectureTo;
 import lk.ijse.dep11.edupanel.to.request.LectureReqTO;
 import lk.ijse.dep11.edupanel.util.LecturerType;
@@ -17,7 +17,7 @@ import java.util.List;
 @CrossOrigin
 public class LecturerHttpController {
     @Autowired
-    private LectureService lectureService;
+    private LecturerService lectureService;
 
 
     @ResponseStatus(HttpStatus.CREATED)

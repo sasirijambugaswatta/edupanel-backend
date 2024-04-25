@@ -1,8 +1,7 @@
 package lk.ijse.dep11.edupanel.service.custom;
 
-import lk.ijse.dep11.edupanel.WebAppConfig;
+import lk.ijse.dep11.edupanel.AppInitializer;
 import lk.ijse.dep11.edupanel.exception.AppException;
-import lk.ijse.dep11.edupanel.repository.custom.LectureService;
 import lk.ijse.dep11.edupanel.to.LectureTo;
 import lk.ijse.dep11.edupanel.to.request.LectureReqTO;
 import lk.ijse.dep11.edupanel.util.LecturerType;
@@ -10,6 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
 import javax.transaction.Transactional;
@@ -18,12 +18,12 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumingThat;
 
-@SpringJUnitWebConfig(classes = {WebAppConfig.class, WebAppConfig.class})
+@SpringBootTest
 @Transactional
 class LectureServiceImplTest {
 
     @Autowired
-    private LectureService lectureService;
+    private LecturerService lectureService;
 
     @BeforeEach
     void setUp() {

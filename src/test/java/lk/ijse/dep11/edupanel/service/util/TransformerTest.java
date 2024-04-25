@@ -1,7 +1,5 @@
 package lk.ijse.dep11.edupanel.service.util;
 
-import lk.ijse.dep11.edupanel.WebAppConfig;
-import lk.ijse.dep11.edupanel.WebRootConfig;
 import lk.ijse.dep11.edupanel.entity.Lecturer;
 import lk.ijse.dep11.edupanel.entity.LinkedIn;
 import lk.ijse.dep11.edupanel.to.LectureTo;
@@ -9,10 +7,11 @@ import lk.ijse.dep11.edupanel.to.request.LectureReqTO;
 import lk.ijse.dep11.edupanel.util.LecturerType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringJUnitWebConfig(classes = {WebAppConfig.class, WebRootConfig.class})
+@SpringBootTest
 class TransformerTest {
 
     @Autowired
